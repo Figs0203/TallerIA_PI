@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acerca de</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; color: #333; }
+        h1 { color: #111; }
+        a { color: #007bff; }
+    </style>
+</head>
+<body>
+    <h1>Acerca de este Proyecto</h1>
+    <p>Este es un sistema de recomendación de películas construido con Django y la API de OpenAI.</p>
+    <p>Utiliza embeddings de texto para encontrar la película más similar a la descripción proporcionada por el usuario, basado en la similitud de coseno.</p>
+    <br>
+    <a href="{% url 'movie:recommend' %}">Volver al recomendador</a>
+</body>
+</html>

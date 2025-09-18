@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recomendador de Películas</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; color: #333; }
+        h1, h2 { color: #111; }
+        form { margin-bottom: 40px; display: flex; }
+        input[type="text"] { flex-grow: 1; padding: 12px; border: 1px solid #ccc; border-radius: 5px 0 0 5px; font-size: 16px; }
+        button { padding: 12px 20px; border: 1px solid #007bff; background-color: #007bff; color: white; border-radius: 0 5px 5px 0; font-size: 16px; cursor: pointer; }
+        button:hover { background-color: #0056b3; }
+        .result { margin-top: 20px; border: 1px solid #e0e0e0; padding: 20px; border-radius: 8px; background-color: #f9f9f9; display: flex; align-items: flex-start; }
+        .result img { max-width: 150px; border-radius: 5px; margin-right: 20px; }
+        .result-content { overflow: hidden; }
+        .error { color: #d9534f; background-color: #f2dede; border: 1px solid #ebccd1; padding: 15px; border-radius: 5px; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Recomendador de Películas</h1>
+    <p>Describe qué tipo de película quieres ver y encontraremos la más parecida para ti.</p>
+
+    <form method="post" action="{% url 'movie:recommend' %}">
+        {% csrf_token %}
+        <input type="text" name="prompt" placeholder="Ej: una película de guerra sobre un francotirador" value="{{ prompt|default:'' }}" required>
+        <button type="submit">Buscar Película</button>
+    </form>
+
+    {% if error_message %}
+        <div class="error"><strong>Error:</strong> {{ error_message }}</div>
+    {% endif %}
+
+    {% if best_movie %}
+        <h2>Te recomendamos:</h2>
+        <div class="result">
+            {% if best_movie.image %}<img src="{{ best_movie.image.url }}" alt="Póster de {{ best_movie.title }}">{% endif %}
+            <div class="result-content"><h3>{{ best_movie.title }} ({{ best_movie.year }})</h3><p>{{ best_movie.description }}</p></div>
+        </div>
+    {% elif request.method == 'POST' and not error_message %}
+        <h2>¡Lo sentimos!</h2><p>No pudimos encontrar una película que coincida con tu descripción. Por favor, intenta con otras palabras.</p>
+    {% endif %}
+</body>
+</html>

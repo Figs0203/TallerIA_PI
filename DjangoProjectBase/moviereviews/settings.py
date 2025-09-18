@@ -30,7 +30,7 @@ SECRET_KEY = 'django-insecure-+9jg)*p09$at+zck$n-6*djf=34w4sc*m##^fmph4pb$_nh%xb
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['34.230.71.87']
+ALLOWED_HOSTS = ['34.230.71.87','127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -61,7 +61,10 @@ ROOT_URLCONF = 'moviereviews.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'moviereviews/templates')],
+        # Add the project's BASE_DIR to the directories to search for templates.
+        # This allows Django to find templates like 'movie/recommend.html'
+        # when the file is located at 'BASE_DIR/movie/recommend.html'.
+        'DIRS': [os.path.join(BASE_DIR, 'moviereviews/templates'), BASE_DIR],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
